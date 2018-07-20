@@ -34,7 +34,7 @@ function _init(localyticsKey) {
 			Localytics = require('com.localytics.android.Localytics');
 			var app = currentActivity.getApplication();
 			Localytics.integrate(currentActivity.getApplication().getApplicationContext());
-			app.registerActivityLifecycleCallbacks(new LocalyticsActivityLifecycleCallbacks(app.getApplicationContext()));
+			//app.registerActivityLifecycleCallbacks(new LocalyticsActivityLifecycleCallbacks(app.getApplicationContext()));
 			Localytics.setLoggingEnabled(true);
 		}
 	}
@@ -120,9 +120,9 @@ exports.getAppInboxView = function (args) {
 				navigationController,
 				detailCloseBtn;
 
-			detailCloseBtn = Ti.UI.createButton({ 
+			detailCloseBtn = Ti.UI.createButton({
 				title: "Done",
-				top: 20, 
+				top: 20,
 				left: 10,
 				width: 44,
 				height: 44
@@ -131,7 +131,7 @@ exports.getAppInboxView = function (args) {
 			detailCloseBtn.addEventListener('click', function () {
 				TiApp.app().hideModalController(detailViewController, true);
 			});
-				
+
 			var CustomInboxViewController = Hyperloop.defineClass('CustomInboxViewController', 'LLInboxViewController');
 			CustomInboxViewController.addMethod({
 				selector: 'tableView:didSelectRowAtIndexPath:',
@@ -139,7 +139,7 @@ exports.getAppInboxView = function (args) {
 				arguments: ['UITableView', 'NSIndexPath'],
 				callback: function (tableView, indexPath) {
 					 var campaign = inboxViewController.campaignForRowAtIndexPath(indexPath);
-					 detailViewController = Localytics.inboxDetailViewControllerForCampaign(campaign);	  
+					 detailViewController = Localytics.inboxDetailViewControllerForCampaign(campaign);
 					 navigationController = NavigationController.alloc().initWithRootViewController(detailViewController);
 					 navigationController.view.addSubview(detailCloseBtn);
 					 TiApp.app().showModalController(navigationController, true);
@@ -149,7 +149,7 @@ exports.getAppInboxView = function (args) {
 					 }
 				}
 			});
-			
+
 			// TODO: Remove the titlebar of the AppInbox until a campaign is opened. Then hide it again after a campaign is closed.
 			var inboxViewController = CustomInboxViewController.alloc().init();
 			var returnView = Ti.UI.createView();
@@ -180,12 +180,12 @@ exports.getAppInboxView = function (args) {
 		var InboxListAdapter = require('com.localytics.android.InboxListAdapter');
 		var InboxCampaign = require('com.localytics.android.InboxCampaign');
 		var LayoutInflater = require('android.view.LayoutInflater');
-		var AdapterView = require('android.widget.AdapterView');     
+		var AdapterView = require('android.widget.AdapterView');
 		var Intent = require('android.content.Intent');
 		var InboxDetailFragment = require('com.localytics.android.InboxDetailFragment'),
 			TypedValue = require('android.util.TypedValue'),
-			Gravity = require('android.view.Gravity');    
-				
+			Gravity = require('android.view.Gravity');
+
 		// Create instances.
 		var currentActivity = new Activity(Ti.Android.currentActivity);
 		var inboxListAdapter = new InboxListAdapter(currentActivity);
@@ -193,7 +193,7 @@ exports.getAppInboxView = function (args) {
 		var containerView = inflater.inflate(Titanium.App.Android.R.layout["activity_inbox"], null);
 		var inboxListView = ListView.cast(containerView.findViewById(Titanium.App.Android.R.id.lv_inbox));
 		var emptyTextView = TextView.cast(containerView.findViewById(Titanium.App.Android.R.id.tv_empty_inbox));
-  	
+
 		// Setup the ListView with an adapter.
 		inboxListView.setAdapter(inboxListAdapter);
 		inboxListView.setEmptyView(emptyTextView);
@@ -403,6 +403,11 @@ exports.upload = function() {
 		}
 	}
 };
+
+exports.getInboxUnreadCount = function() {
+	_init(Alloy.Globals.localyticsKey);
+	return Localytics.getInboxCampaignsUnreadCount();
+}
 
 /*
  * EOF

@@ -1,9 +1,9 @@
 var localyticsHyperloop = require('localytics-hyperloop');
-localyticsHyperloop.init('YOUR-LOCALYTICS-KEY-HERE');
+localyticsHyperloop.init('7a8eb22cc11b339ff8547c7-0ba94a74-263e-11e8-c2f3-007c928ca240');
 
 var appInboxView = localyticsHyperloop.getAppInboxView();
 
-$.index.open();    
+$.index.open();
 $.appInboxContainerView.add(appInboxView);
 
 /*
@@ -20,12 +20,12 @@ function doTagEventBtnClick() {
 
 function doTagScreenBtnClick() {
 	localyticsHyperloop.tagScreen("test_screen_tag");
-	alert('Test screen tagged! Check Localytics dashboard for "test_screen_tag".');	
+	alert('Test screen tagged! Check Localytics dashboard for "test_screen_tag".');
 }
 
 function doSetProfileBtnClick() {
 	localyticsHyperloop.setProfileAttribute("test_profile_attribute", "This is a test attribute.");
-	alert('Test profile attribute added! Check Localytics dashboard for "test_profile_attribute".');		
+	alert('Test profile attribute added! Check Localytics dashboard for "test_profile_attribute".');
 }
 
 function doSetCustomerIdBtnClick() {
@@ -49,7 +49,7 @@ function doSetFullNameBtnClick() {
 }
 
 function doSetEmailAddressBtnClick() {
-	localyticsHyperloop.setEmailAddress('sir.john@smith.com');
+	localyticsHyperloop.setEmailAddress('samuel.marinov@centrevilletech.com');
 	alert('Email address set!');
 }
 
@@ -69,6 +69,11 @@ function doReloadInboxBtnClick() {
 			alert('Reloaded the AppInbox successfully!');
 		});
 	}
+}
+
+function doUnreadCountDialogShow()
+{
+	alert(localyticsHyperloop.getInboxUnreadCount());
 }
 
 /*
@@ -96,5 +101,5 @@ function doStopAppInboxBackgroundServiceBtnClick() {
 		alert('Stopped the background service!');
 	} else {
 		alert('Not supported on Android!');
-	}	
+	}
 }

@@ -19,6 +19,7 @@
 				<View id="appInboxContainerView" />
 				<View id="appInboxControlBoxView">
 					<Button title="Reload Inbox" id="reloadInboxBtn" onClick="doReloadInboxBtnClick" />
+					<Button title="Number of unreads" id="unreadCountInboxBtn" onClick="doUnreadCountDialogShow" />
 				</View>
 			</Window>
 		</Tab>
